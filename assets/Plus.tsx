@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function Plus(props) {
+const Plus = (props: any) => {
   return (
     <Svg
       width={48}
