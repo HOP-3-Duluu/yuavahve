@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Circle, Path } from "react-native-svg"
 
-function Group(props) {
+const Group = (props: any) => {
   return (
     <Svg
       width={32}
