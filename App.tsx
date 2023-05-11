@@ -1,13 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Login from './pages/Login';
-import Bottombar from './components/Footer';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import ExpensePage from "./pages/Expense";
+import Bottombar from "./components/Footer";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Login></Login>
+      <ExpensePage></ExpensePage>
       <StatusBar style="auto" />
+      <Bottombar />
     </View>
   );
 }
@@ -15,8 +16,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
