@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Login from './pages/Login';
-import Bottombar from './components/Footer';
+import JoinFamily from './pages/joinFamily';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Login></Login>
+      <JoinFamily></JoinFamily>
       <StatusBar style="auto" />
     </View>
   );
