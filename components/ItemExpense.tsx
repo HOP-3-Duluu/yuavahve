@@ -17,7 +17,9 @@ export const ItemExpenseComponent = ({
       <View style={styles.dataContainer}>
         <View>
           <Text>{index === 0 ? "Энэ сар" : "Өмнө сар"}</Text>
-          <Text style={styles.text}>{month}</Text>
+          <Text style={styles.text}>
+            {month.length > 16 ? month.substring(0, 16 - 3) + "..." : month}
+          </Text>
         </View>
         <Text style={styles.cost}>{cost}₮</Text>
         <ArrowLeft />
@@ -26,7 +28,9 @@ export const ItemExpenseComponent = ({
   ) : (
     <View style={styles.itemCompSmall}>
       <View style={styles.smallDataContainer}>
-        <Text style={styles.smallText}>{month}</Text>
+        <Text style={styles.smallText}>
+          {month.length > 16 ? month.substring(0, 16 - 3) + "..." : month}
+        </Text>
         <Text style={styles.cost}>{cost}₮</Text>
       </View>
     </View>
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     width: "73%",
     height: "100%",
-    left: "150%",
+    left: "130%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -63,12 +67,13 @@ const styles = StyleSheet.create({
   smallDataContainer: {
     width: "55%",
     height: "100%",
-    left: "510%",
+    left: "450%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   text: {
+    fontSize: 14,
     fontFamily: "Montserrat_600SemiBold",
   },
   smallText: {
