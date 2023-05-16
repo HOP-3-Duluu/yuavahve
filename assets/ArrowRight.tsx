@@ -1,7 +1,7 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
 
-const ArrowLeft = () => {
+const ArrowRight = () => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,4 +18,4 @@ const ArrowLeft = () => {
   );
 };
 
-export default ArrowLeft;
+export default ArrowRight;

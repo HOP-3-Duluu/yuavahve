@@ -1,5 +1,6 @@
+import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import ArrowLeft from "../assets/ArrowLeft";
+import ArrowRight from "../assets/ArrowRight";
 
 export const ItemExpenseComponent = ({
   big,
@@ -8,7 +9,7 @@ export const ItemExpenseComponent = ({
   index,
 }: {
   big: boolean;
-  month: string;
+  month: number;
   cost: number;
   index: number;
 }) => {
@@ -16,21 +17,17 @@ export const ItemExpenseComponent = ({
     <View style={styles.itemComp}>
       <View style={styles.dataContainer}>
         <View>
-          <Text>{index === 0 ? "Энэ сар" : "Өмнө сар"}</Text>
-          <Text style={styles.text}>
-            {month.length > 16 ? month.substring(0, 16 - 3) + "..." : month}
-          </Text>
+          <Text>{index === 0 ? "Энэ сар" : "Өмнөх сар"}</Text>
+          <Text style={styles.text}>{month}-р сар</Text>
         </View>
         <Text style={styles.cost}>{cost}₮</Text>
-        <ArrowLeft />
+        <ArrowRight />
       </View>
     </View>
   ) : (
     <View style={styles.itemCompSmall}>
       <View style={styles.smallDataContainer}>
-        <Text style={styles.smallText}>
-          {month.length > 16 ? month.substring(0, 16 - 3) + "..." : month}
-        </Text>
+        <Text style={styles.smallText}>{month}-р сар</Text>
         <Text style={styles.cost}>{cost}₮</Text>
       </View>
     </View>
@@ -39,35 +36,37 @@ export const ItemExpenseComponent = ({
 
 const styles = StyleSheet.create({
   itemComp: {
-    width: "100%",
+    width: "80%",
     height: 64,
     borderWidth: 1,
     borderColor: "#D9D9D9",
-    borderRadius: 32,
+    borderTopRightRadius: 32,
+    borderBottomRightRadius: 32,
+    borderLeftWidth: 0,
+    padding: 12,
     marginTop: 24,
-    left: "-20%",
   },
   itemCompSmall: {
-    width: "100%",
+    width: "60%",
     height: 36,
     borderWidth: 1,
     borderColor: "#D9D9D9",
-    borderRadius: 32,
+    borderTopRightRadius: 32,
+    borderBottomRightRadius: 32,
+    borderLeftWidth: 0,
+    padding: 8,
     marginTop: 24,
-    left: "-40%",
   },
   dataContainer: {
-    width: "73%",
+    width: "100%",
     height: "100%",
-    left: "130%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   smallDataContainer: {
-    width: "55%",
+    width: "100%",
     height: "100%",
-    left: "450%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
