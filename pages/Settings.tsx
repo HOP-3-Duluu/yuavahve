@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +8,9 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+=======
+import { Image, Text, View, StyleSheet, Pressable } from "react-native";
+>>>>>>> 7d0db09 (Front End finished)
 import CopyIcon from "../assets/CopyIcon";
 import EditIcon from "../assets/EditIcon";
 import { Dimensions } from "react-native";
