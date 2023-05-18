@@ -1,71 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Button, Pressable, SafeAreaView, StyleSheet, useWindowDimensions, TextInput } from "react-native";
-import Family from "../assets/Family";
-import Create from "../assets/Create";
-import Join from "../assets/Join";
-
-
-
-const BigButton = ({ type }: { type: string }) => {
-    const { width } = useWindowDimensions();
-    const styles = StyleSheet.create({
-        Ctext: {
-            fontWeight: '600',
-            color: '#5CB881',
-            fontSize: width / 24,
-        },
-        Jtext: {
-            fontWeight: '600',
-            color: '#fff',
-            fontSize: width / 24,
-        },
-        Jbutton: {
-            width: width / 3.2,
-            height: width / 3.2,
-            backgroundColor: '#5CB881',
-            borderRadius: width / 13,
-            borderColor: '#5CB881',
-            borderWidth: width / 200,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 15,
-        },
-        Cbutton: {
-            width: width / 3.2,
-            height: width / 3.2,
-            backgroundColor: '#ffffff',
-            borderRadius: width / 13,
-            borderColor: '#5CB881',
-            borderWidth: width / 200,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 15,
-        },
-        container: {
-            width: width,
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: 15,
-            gap: 10,
-        },
-        
-    });
-
-    return (
-        <Pressable onPress={type === 'Uusgeh' ? () => alert("Uusgeh") : () => alert("Negdeh")} style={type === 'Uusgeh' ? styles.Cbutton : styles.Jbutton}>
-            <View style={styles.container}>
-                {type === 'Uusgeh' ? <Join width={width / 10} /> : <Create width={width / 10} />}
-                <Text style={type === 'Uusgeh' ? styles.Ctext : styles.Jtext}>
-                    {type === 'Uusgeh' ? 'Үүсгэх' : 'Нэгдэх'}
-                </Text>
-            </View>
-        </Pressable>
-    );
-}
+import CustomSwitch from "../components/customSwitch";
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 
 const JoinFamily = () => {
     const { width, height } = useWindowDimensions()
+    const [hasPermission, setHasPermission] = useState<any | null>(null);
+    const [scanned, setScanned] = useState(false);
+
+
+
+    useEffect(() => {
+        const getBarCodeScannerPermissions = async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status === 'granted');
+        };
+
+        getBarCodeScannerPermissions();
+    }, []);
+
+    const handleBarCodeScanned = ({ type, data }: any) => {
+        setScanned(true);
+        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    };
+
+    if (hasPermission === null) {
+        return <Text>Requesting for camera permission</Text>;
+    }
+    if (hasPermission === false) {
+        return <Text>No access to camera</Text>
+    }
+    const onSelectSwitch = () => {
+
+    };
+
 
     const styles = StyleSheet.create({
         container: {
@@ -76,15 +45,39 @@ const JoinFamily = () => {
             alignItems: 'center',
             marginTop: 15,
         },
+        text: {
+            fontWeight: '500',
+            fontSize: 24,
+            textAlign: 'center'
+        },
+        qrActive: {
+            height: width * 0.87,
+            width: width * 0.87,
+            borderRadius: width * 0.08,
+        },
+        qrNotActive: {
+            height: width * 0.87,
+            width: width * 0.87,
+            borderRadius: width * 0.08,
+            marginStart: -1000
+        }
     });
     return (
-        <SafeAreaView style={{ width: width, height: height, alignItems: 'center', justifyContent: 'center',gap: 30 }}>
-            <Family width={width * 0.9} />
-            <View style={styles.container}>
-                <BigButton type={'Uusgeh'} />
-                <BigButton type={'Negdeh'} />
-            </View>
-
+        <SafeAreaView style={{ width: width, height: height, alignItems: 'center', gap: 30 }}>
+            <Text style={styles.text}>Сайн уу? Тэргэл</Text>
+            <CustomSwitch
+                selectionMode={1}
+                roundCorner={true}
+                option1={'QR'}
+                option2={'Код'}
+                onSelectSwitch={onSelectSwitch}
+                selectionColor={'white'}
+            />
+            <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={styles.qrActive}
+            />
+            {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
         </SafeAreaView>
     );
 }
