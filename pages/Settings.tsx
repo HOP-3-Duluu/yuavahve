@@ -47,11 +47,9 @@ export const Settings = () => {
           />
           <View style={styles.codeCont}>
             <Text style={styles.codeTitle}>Код:</Text>
-
             <Text numberOfLines={1} style={styles.familyId}>
               {shortenString}
             </Text>
-
             <Pressable
               onPress={() => copyToClipboard()}
               style={styles.copyIcon}
