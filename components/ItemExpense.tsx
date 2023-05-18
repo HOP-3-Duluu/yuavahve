@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import ArrowRight from "../assets/ArrowRight";
+import { useNavigation } from "@react-navigation/native";
 
 export const ItemExpenseComponent = ({
   big,
@@ -13,8 +14,12 @@ export const ItemExpenseComponent = ({
   cost: number;
   index: number;
 }) => {
+  const navigation = useNavigation();
   return big ? (
-    <Pressable style={styles.itemComp}>
+    <Pressable
+      style={styles.itemComp}
+      onPress={() => navigation.navigate("ExpenseMonth")}
+    >
       <View style={styles.dataContainer}>
         <View>
           <Text>{index === 0 ? "Энэ сар" : "Өмнөх сар"}</Text>
