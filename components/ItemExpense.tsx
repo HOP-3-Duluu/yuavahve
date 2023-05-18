@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import ArrowRight from "../assets/ArrowRight";
 
 export const ItemExpenseComponent = ({
@@ -9,12 +9,12 @@ export const ItemExpenseComponent = ({
   index,
 }: {
   big: boolean;
-  month: number;
+  month: string;
   cost: number;
   index: number;
 }) => {
   return big ? (
-    <View style={styles.itemComp}>
+    <Pressable style={styles.itemComp}>
       <View style={styles.dataContainer}>
         <View>
           <Text>{index === 0 ? "Энэ сар" : "Өмнөх сар"}</Text>
@@ -23,7 +23,7 @@ export const ItemExpenseComponent = ({
         <Text style={styles.cost}>{cost}₮</Text>
         <ArrowRight />
       </View>
-    </View>
+    </Pressable>
   ) : (
     <View style={styles.itemCompSmall}>
       <View style={styles.smallDataContainer}>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     borderBottomRightRadius: 32,
     borderLeftWidth: 0,
-    padding: 8,
+    paddingLeft: 12,
+    paddingRight: 12,
     marginTop: 24,
   },
   dataContainer: {

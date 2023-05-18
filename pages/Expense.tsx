@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { ItemExpenseComponent } from "../components/ItemExpense";
 
@@ -44,128 +44,104 @@ const data = [
     amount: 1,
   },
   {
-    date: 1683716265607,
+    date: 1680278400000,
     price: 5000,
     amount: 1,
   },
   {
-    date: 1669824000000,
+    date: 1680278400000,
+    price: 5000,
+    amount: 1,
+  },
+  {
+    date: 1680278400000,
+    price: 5000,
+    amount: 1,
+  },
+  {
+    date: 1677600000000,
     price: 30000,
     amount: 1,
   },
-  {
-    date: 1669824000000,
-    price: 20000,
-    amount: 1,
-  },
-  {
-    date: 1669824000000,
-    price: 10000,
-    amount: 1,
-  },
-  {
-    date: 1667232000000,
-    price: 1000,
-    amount: 1,
-  },
-  {
-    date: 1667232000000,
-    price: 15000,
-    amount: 1,
-  },
 ];
 
-const newMockData = [
-  {
-    year: 2023,
-    data: [
-      {
-        month: 4,
-        cost: 400000,
-      },
-      {
-        month: 3,
-        cost: 300000,
-      },
-      {
-        month: 2,
-        cost: 200000,
-      },
-      {
-        month: 1,
-        cost: 100000,
-      },
-    ],
-  },
-  {
-    year: 2022,
-    data: [
-      {
-        month: 12,
-        cost: 250000,
-      },
-    ],
-  },
-];
+type ExpenseData = {
+  date: number;
+  price: number;
+  amount: number;
+};
+
+const convert = (data: ExpenseData[]) => {
+  const groupByYear = data.reduce((group, item) => {
+    const { date } = item;
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+
+    group[year] = group[year] ?? {};
+
+    group[year][month] = group[year][month] ?? [];
+    group[year][month].push(item);
+
+    return group;
+  }, {} as any);
+  return groupByYear;
+};
 
 const ExpensePage = () => {
-  const [newData, setNewData] = useState([]);
   const date = new Date();
-  useEffect(() => {
-    data.map((el, index) => {
-      const createdAt = new Date(el.date);
-      const month = createdAt.getMonth() + 1;
-      const year = createdAt.getFullYear();
-      if (newData === []) {
-        setNewData([...newData, { year: year, data: [] }]);
-      } else {
-        newData.map((e, index) => {
-          if (e.year === year) {
-            e.data.map((d) => {
-              if (d.month === month) {
-                let updatedCost = d.cost + el.price;
-                console.log(updatedCost)
-              } else {
-                setNewData([
-                  ...newData,
-                  { year: year, data: [...data, { month: month, cost: 0 }] },
-                ]);
-              }
-            });
-          } else {
-            setNewData([...newData, { year: year, data: [] }]);
-          }
-        });
-      }
-    });
-    console.log(newData);
-  }, []);
+  const newData = useMemo(() => convert(data), []);
+
   return (
-    <SafeAreaView style={{ width: "100%", backgroundColor: "#fff" }}>
+    <SafeAreaView
+      style={{ width: "100%", height: "100%", backgroundColor: "#fff" }}
+    >
       <ScrollView>
         <View style={styles.container}>
-          {newMockData.map((el, index) => {
-            return (
-              <>
-                <View style={styles.header}>
-                  <Text style={styles.text}>{el.year}</Text>
-                  <View style={styles.line}></View>
-                </View>
-                {el.data.map((e, index) => (
-                  <ItemExpenseComponent
-                    big={
-                      date.getFullYear() === el.year &&
-                      date.getMonth() - 1 < e.month &&
-                      true
-                    }
-                    month={e.month}
-                    cost={e.cost}
-                    index={index}
-                  />
-                ))}
-              </>
-            );
-          })}
+          <View style={{ padding: 24, paddingLeft: 12, paddingBottom: 0 }}>
+            <Text
+              style={{ fontFamily: "Montserrat_600SemiBold", fontSize: 16 }}
+            >
+              <Text style={{ fontFamily: "Montserrat_500Medium" }}>
+                {"Өнөөдөр: "}
+              </Text>
+              {`${date.getFullYear()} оны ${
+                date.getMonth() + 1
+              }-р сарын ${date.getDate()}`}
+            </Text>
+          </View>
+          {Object.keys(newData)
+            .reverse()
+            ?.map((years) => {
+              return (
+                <>
+                  <View style={styles.header}>
+                    <Text style={styles.text}>{years}</Text>
+                    <View style={styles.line}></View>
+                  </View>
+                  {Object.keys(newData[years])
+                    .reverse()
+                    .map((months, index) => {
+                      let finalCost = 0;
+                      newData[years][months].map(
+                        (el) => (finalCost = finalCost + el.price * el.amount)
+                      );
+                      return (
+                        <ItemExpenseComponent
+                          big={
+                            date.getFullYear() === Number(years) &&
+                            date.getMonth() - 1 < Number(months) &&
+                            true
+                          }
+                          month={months}
+                          cost={finalCost}
+                          index={index}
+                        />
+                      );
+                    })}
+                </>
+              );
+            })}
         </View>
       </ScrollView>
     </SafeAreaView>
