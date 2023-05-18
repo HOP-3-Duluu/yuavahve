@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   useFonts,
@@ -11,8 +11,24 @@ import {
 import Setting from "./assets/Setting";
 import ExpensePage from "./pages/Expense";
 import Bottombar from "./components/Footer";
+import Settings from "./pages/Settings";
+import BackArrow from "./assets/BackArrow";
 
 const Stack = createNativeStackNavigator();
+
+const SettingsHeader = () => {
+  const navigation = useNavigation();
+  return (
+    <Pressable onPress={() => navigation.navigate("Settings")}>
+      {Setting}
+    </Pressable>
+  );
+};
+
+const BackHeader = () => {
+  const navigation = useNavigation();
+  return <Pressable onPress={() => navigation.goBack()}>{BackArrow}</Pressable>;
+};
 
 const App = () => {
   let [fontsLoaded, error] = useFonts({
@@ -45,11 +61,26 @@ const App = () => {
               fontSize: 24,
             },
             headerShadowVisible: false,
-            headerRight: () => (
-              <Pressable onPress={() => alert("Setting ruu orson")}>
-                {Setting}
-              </Pressable>
-            ),
+            headerRight: SettingsHeader,
+          })}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={({ route }) => ({
+            title: "Тохиргоо",
+            headerTintColor: "#5CB881",
+            headerStyle: {
+              backgroundColor: "white",
+            },
+            headerBackVisible: false,
+
+            headerTitleStyle: {
+              fontFamily: "Montserrat_600SemiBold",
+              fontSize: 24,
+            },
+            headerShadowVisible: false,
+            headerLeft: BackHeader,
           })}
         />
       </Stack.Navigator>
