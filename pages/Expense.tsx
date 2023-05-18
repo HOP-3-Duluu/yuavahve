@@ -117,11 +117,23 @@ const ExpensePage = () => {
       const month = createdAt.getMonth() + 1;
       const year = createdAt.getFullYear();
       if (newData === []) {
-        setNewData([...newData, { year: year }]);
+        setNewData([...newData, { year: year, data: [] }]);
       } else {
-        newData.map((el, index) => {
-          if (el.year === year) {
-            console.log(year);
+        newData.map((e, index) => {
+          if (e.year === year) {
+            e.data.map((d) => {
+              if (d.month === month) {
+                let updatedCost = d.cost + el.price;
+                console.log(updatedCost)
+              } else {
+                setNewData([
+                  ...newData,
+                  { year: year, data: [...data, { month: month, cost: 0 }] },
+                ]);
+              }
+            });
+          } else {
+            setNewData([...newData, { year: year, data: [] }]);
           }
         });
       }
