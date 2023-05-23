@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { View, Text, SafeAreaView, Dimensions, ScrollView } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import { ItemExpenseComponent } from "../components/ItemExpense";
 import ArrowRight from "../assets/ArrowRight";
 
 const data = [
   {
     date: 1683716265607,
-    price: 3000,
+    price: 12000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 3000,
+    price: 20000,
     amount: 1,
   },
   {
@@ -26,37 +22,12 @@ const data = [
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 19000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 7000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 5000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 10000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 5000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 5000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 5000,
+    price: 20000,
     amount: 1,
   },
   {
@@ -66,17 +37,52 @@ const data = [
   },
   {
     date: 1683716265607,
-    price: 3000,
+    price: 20000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 20000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 3000,
+    price: 24000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 22000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 16000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 30000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 21000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 10000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 21000,
+    amount: 1,
+  },
+  {
+    date: 1683716265607,
+    price: 19000,
     amount: 1,
   },
   {
@@ -86,52 +92,47 @@ const data = [
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 23000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 7000,
+    price: 20000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 17000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 10000,
+    price: 27000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 23000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 20000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
+    price: 21000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 30000,
+    price: 19000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 5000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 5000,
+    price: 24000,
     amount: 1,
   },
   {
@@ -141,25 +142,33 @@ const data = [
   },
   {
     date: 1683716265607,
-    price: 30000,
+    price: 27000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 30000,
+    price: 26000,
     amount: 1,
   },
   {
     date: 1683716265607,
-    price: 30000,
-    amount: 1,
-  },
-  {
-    date: 1683716265607,
-    price: 30000,
+    price: 25000,
     amount: 1,
   },
 ];
+
+const dataGroupByDate = (data) => {
+  const groupByDay = data.reduce((group, item) => {
+    const { date } = item;
+    const d = new Date(date);
+    const day = d.getDate();
+
+    group[day] = group[day] ?? [];
+    group[day].push(item);
+    return group;
+  }, {} as any);
+  return groupByDay;
+};
 
 const getAllDaysInMonth = (month: number, year: number) =>
   Array.from(
@@ -167,18 +176,69 @@ const getAllDaysInMonth = (month: number, year: number) =>
     (_, i) => new Date(year, month - 1, i + 1)
   );
 
-const ExpenseMonthPage = () => {
+const ExpenseMonthPage = ({ route }) => {
   const [daysOfMonth, setDaysOfMonth] = useState<any>([]);
-  const [newData, setNewData] = useState<any>([]);
+  const [onlyPriceData, setOnlyPriceData] = useState<any>([]);
   const [showArrow, setShowArrow] = useState<boolean>(true);
+  const groupedData = useMemo(() => dataGroupByDate(data), []);
 
   useEffect(() => {
     let arr = [];
-    getAllDaysInMonth(5, 2023).map((el) => {
+    getAllDaysInMonth(route.params?.month, route.params?.year).map((el) => {
       arr.push(`${el.getDate()}-нд`);
     });
     setDaysOfMonth(arr);
   }, []);
+
+  useEffect(() => {
+    daysOfMonth.map((el, index) => {
+      let day = el.split("-")[0];
+      let addedPrice = 0;
+      groupedData[day]?.map((e) => (addedPrice = addedPrice + e.price));
+      setOnlyPriceData((onlyPriceData) => [
+        ...onlyPriceData,
+        { price: addedPrice, day },
+      ]);
+    });
+  }, [daysOfMonth]);
+
+  if (onlyPriceData.length === 0) {
+    return (
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <View
+          style={{ width: "100%", alignItems: "center", marginVertical: 24 }}
+        >
+          <Text style={{ fontFamily: "Montserrat_800ExtraBold", fontSize: 24 }}>
+            {route.params?.year} оны {route.params?.month}-р сар
+          </Text>
+        </View>
+        <View
+          style={{
+            height: "70%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 24,
+              fontFamily: "Montserrat_800ExtraBold",
+              color: "#5CB881",
+            }}
+          >
+            Мэдээлэл олдсонгүй.
+          </Text>
+        </View>
+      </View>
+    );
+  }
 
   const handleScroll = (event: Object) => {
     const positionX = event.nativeEvent.contentOffset.x;
@@ -187,58 +247,67 @@ const ExpenseMonthPage = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", height: "100%" }}>
-      <View style={{ width: "100%", alignItems: "center", marginVertical: 24 }}>
-        <Text style={{ fontFamily: "Montserrat_800ExtraBold", fontSize: 24 }}>
-          {2023} оны {5}-р сар
-        </Text>
-      </View>
-      <View style={{ justifyContent: "center" }}>
-        <ScrollView horizontal onScroll={handleScroll}>
-          <LineChart
-            data={{
-              labels: daysOfMonth,
-              datasets: [
-                {
-                  data: [
-                    10000, 0, 10000, 2000, 30000, 0, 10000, 5000, 10000, 0,
-                    10000, 5000, 10000, 0, 10000, 5000, 10000, 0, 10000, 5000,
-                    10000, 0, 10000, 5000, 10000, 0, 10000, 5000, 10000, 0,
-                    10000,
-                  ],
-                },
-              ],
-            }}
-            width={(Dimensions.get("window").width * daysOfMonth.length) / 6}
-            height={220}
-            yAxisLabel="₮"
-            yAxisSuffix=""
-            yAxisInterval={1}
-            chartConfig={{
-              backgroundColor: "#fff",
-              backgroundGradientFrom: "#fff",
-              backgroundGradientTo: "#fff",
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(92, 184, 129, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              propsForDots: {
-                r: "5",
-                strokeWidth: "0",
-                stroke: "#5CB881",
-              },
-            }}
-            bezier
-            style={{ marginVertical: 8 }}
-          />
-        </ScrollView>
+      <ScrollView>
         <View
-          style={[
-            { position: "absolute", right: showArrow ? 24 : -36 },
-            { transform: [{ scale: 1.4 }] },
-          ]}
+          style={{ width: "100%", alignItems: "center", marginVertical: 24 }}
         >
-          <ArrowRight />
+          <Text style={{ fontFamily: "Montserrat_800ExtraBold", fontSize: 24 }}>
+            {route.params?.year} оны {route.params?.month}-р сар
+          </Text>
         </View>
-      </View>
+        <View style={{ justifyContent: "center" }}>
+          {/* <ScrollView horizontal onScroll={handleScroll}> */}
+          <ScrollView horizontal>
+            <LineChart
+              data={{
+                labels: daysOfMonth,
+                datasets: [
+                  {
+                    data: onlyPriceData.map((el, index) => el?.price),
+                  },
+                ],
+              }}
+              width={(Dimensions.get("window").width * daysOfMonth.length) / 6}
+              height={240}
+              yAxisLabel="₮"
+              yAxisSuffix=""
+              yAxisInterval={1}
+              chartConfig={{
+                backgroundColor: "#fff",
+                backgroundGradientFrom: "#fff",
+                backgroundGradientTo: "#fff",
+                decimalPlaces: 0,
+                color: (opacity = 1) => `rgba(92, 184, 129, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                propsForDots: {
+                  r: "5",
+                  strokeWidth: "0",
+                  stroke: "#5CB881",
+                },
+              }}
+              bezier
+              style={{ marginVertical: 8 }}
+            />
+          </ScrollView>
+          <View
+            style={[
+              { position: "absolute", right: showArrow ? 24 : -36 },
+              { transform: [{ scale: 1.4 }] },
+            ]}
+          >
+            <ArrowRight />
+          </View>
+        </View>
+        {onlyPriceData?.map((el, index) => (
+          <ItemExpenseComponent
+            big={false}
+            text={`${route.params.month}-р сарын ${el.day}-нд`}
+            cost={el.price}
+            key={index}
+          />
+        ))}
+        <View style={{ height: 120 }}></View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

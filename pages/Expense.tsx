@@ -133,9 +133,10 @@ const ExpensePage = () => {
                             date.getMonth() - 1 < Number(months) &&
                             true
                           }
-                          month={months}
+                          text={`${months}-р сар`}
+                          year={Number(years)}
                           cost={finalCost}
-                          index={index}
+                          key={index}
                         />
                       );
                     })}

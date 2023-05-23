@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -34,6 +34,7 @@ const App = () => {
       <Stack.Navigator
         screenOptions={({ route }) => ({
           title: "Юу авах вэ?",
+          headerTitleAlign: "center",
           headerTintColor: "#5CB881",
           headerStyle: {
             backgroundColor: "white",
