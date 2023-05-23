@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { ItemExpenseComponent } from "../components/ItemExpense";
 
