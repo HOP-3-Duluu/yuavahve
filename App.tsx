@@ -42,6 +42,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Home"
         screenOptions={({ route }) => ({
           title: "Юу авах вэ?",
           headerTitleAlign: "center",
@@ -57,6 +58,7 @@ const App = () => {
           headerRight: () => <SettingsHeader />
         })}
       >
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Expense" component={ExpensePage} />
         <Stack.Screen name="ExpenseMonth" component={ExpenseMonthPage} />
         <Stack.Screen name="Settings" component={Settings} />
