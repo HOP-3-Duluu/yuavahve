@@ -12,11 +12,8 @@ import Setting from "./assets/Setting";
 import Bottombar from "./components/Footer";
 import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
-<<<<<<< HEAD
-import HomeScreen from "./pages/Home";
-=======
->>>>>>> c06f599 (settings done)
 import Settings from "./pages/Settings";
+import HomeScreen from "./pages/Home";
 
 const Stack = createNativeStackNavigator();
 
