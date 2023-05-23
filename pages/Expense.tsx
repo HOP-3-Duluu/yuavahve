@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { ItemExpenseComponent } from "../components/ItemExpense";
 
@@ -133,9 +133,10 @@ const ExpensePage = () => {
                             date.getMonth() - 1 < Number(months) &&
                             true
                           }
-                          month={months}
+                          text={`${months}-р сар`}
+                          year={Number(years)}
                           cost={finalCost}
-                          index={index}
+                          key={index}
                         />
                       );
                     })}

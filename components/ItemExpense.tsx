@@ -1,24 +1,33 @@
 import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import ArrowRight from "../assets/ArrowRight";
+import { useNavigation } from "@react-navigation/native";
 
 export const ItemExpenseComponent = ({
   big,
-  month,
+  year,
+  text,
   cost,
-  index,
+  key,
 }: {
   big: boolean;
-  month: string;
+  year: number;
+  text: string;
   cost: number;
-  index: number;
+  key: number;
 }) => {
+  const navigation = useNavigation();
   return big ? (
-    <Pressable style={styles.itemComp}>
+    <Pressable
+      style={styles.itemComp}
+      onPress={() =>
+        navigation.navigate("ExpenseMonth", { year, month: text.split("-")[0] })
+      }
+    >
       <View style={styles.dataContainer}>
         <View>
-          <Text>{index === 0 ? "Энэ сар" : "Өмнөх сар"}</Text>
-          <Text style={styles.text}>{month}-р сар</Text>
+          <Text>{key === 0 ? "Энэ сар" : "Өмнөх сар"}</Text>
+          <Text style={styles.text}>{text}</Text>
         </View>
         <Text style={styles.cost}>{cost}₮</Text>
         <ArrowRight />
@@ -27,7 +36,7 @@ export const ItemExpenseComponent = ({
   ) : (
     <View style={styles.itemCompSmall}>
       <View style={styles.smallDataContainer}>
-        <Text style={styles.smallText}>{month}-р сар</Text>
+        <Text style={styles.smallText}>{text}</Text>
         <Text style={styles.cost}>{cost}₮</Text>
       </View>
     </View>
@@ -47,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   itemCompSmall: {
-    width: "60%",
+    width: "65%",
     height: 36,
     borderWidth: 1,
     borderColor: "#D9D9D9",
@@ -73,11 +82,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Montserrat_600SemiBold",
   },
   smallText: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: "Montserrat_500Medium",
   },
   cost: {
