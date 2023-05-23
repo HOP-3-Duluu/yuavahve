@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -12,6 +12,7 @@ import Setting from "./assets/Setting";
 import Bottombar from "./components/Footer";
 import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
+import HomeScreen from "./pages/Home";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Home"
         screenOptions={({ route }) => ({
           title: "Юу авах вэ?",
           headerTitleAlign: "center",
@@ -51,6 +53,7 @@ const App = () => {
           ),
         })}
       >
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Expense" component={ExpensePage} />
         <Stack.Screen name="ExpenseMonth" component={ExpenseMonthPage} />
       </Stack.Navigator>
