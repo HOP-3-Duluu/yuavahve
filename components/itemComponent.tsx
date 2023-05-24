@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+} from "react-native-reanimated";
+import TrashIcon from "../assets/Trash";
 
 const data = [
   {
@@ -17,31 +24,90 @@ const LeftActions = () => {
 const RightActions = () => {
   return (
     <View
-      style={{ width: 32, height: "100%", backgroundColor: "#ff0000" }}
-    ></View>
+      style={{
+        width: 56,
+        height: "100%",
+        paddingTop: 80,
+        paddingHorizontal: 12,
+      }}
+    >
+      <TrashIcon />
+    </View>
   );
 };
 
-const ItemComponent = () => {
+const ItemComponent = ({
+  name,
+  amount,
+  isBought,
+}: {
+  name: string;
+  amount: number;
+  isBought: boolean;
+}) => {
+  const [activateDelete, setActivateDelete] = useState(false);
+  const itemColor = useSharedValue("#fff");
+  const itemBorderColor = useSharedValue("#D3D3D3");
+
+  const animationStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: withTiming(itemColor.value, {
+        duration: 200,
+        easing: Easing.bezier(0, 0, 0, 1),
+      }),
+      borderColor: withTiming(itemBorderColor.value, {
+        duration: 200,
+        easing: Easing.bezier(0, 0, 0, 1),
+      }),
+    };
+  });
+
+  useEffect(() => {
+    if (activateDelete) {
+      itemColor.value = "#F7B4B4";
+      itemBorderColor.value = "#EE6969";
+    } else {
+      if (isBought) {
+        itemColor.value = "#ADDBC0";
+        itemBorderColor.value = "#5CB881";
+      } else {
+        itemColor.value = "#fff";
+        itemBorderColor.value = "#D3D3D3";
+      }
+    }
+  }, [isBought, activateDelete]);
+
   return (
-    <View style={{ left: "-20%", width: "120%" }}>
+    <View style={{ left: "-20%", width: "100%" }}>
       <Swipeable
         renderLeftActions={LeftActions}
         renderRightActions={RightActions}
         friction={5}
+        onSwipeableOpen={(event) => {
+          if (event === "right") {
+            setActivateDelete(true);
+          } else {
+            setActivateDelete(false);
+          }
+        }}
+        onSwipeableClose={(event) => {
+          setActivateDelete(false);
+        }}
       >
         <View style={styles.itemContainer}>
-          <View style={styles.iconContainer}></View>
-          <View style={styles.item}>
+          <Animated.View
+            style={[styles.iconContainer, animationStyle]}
+          ></Animated.View>
+          <Animated.View style={[styles.item, animationStyle]}>
             <View style={styles.textContainer}>
-              <Text style={styles.itemName}>Монгол сүү</Text>
-              <Text style={styles.itemAmount}>2ш</Text>
+              <Text style={styles.itemName}>{name}</Text>
+              <Text style={styles.itemAmount}>{amount}ш</Text>
             </View>
-            <View style={styles.textContainer}>
+            <View style={styles.textBottomContainer}>
               <Text style={styles.itemCreator}>Ээжийн хүү</Text>
               <Text style={styles.itemDate}>16:42:20</Text>
             </View>
-          </View>
+          </Animated.View>
         </View>
       </Swipeable>
     </View>
@@ -50,7 +116,7 @@ const ItemComponent = () => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: "80%",
+    width: "100%",
   },
   iconContainer: {
     width: 64,
@@ -66,6 +132,7 @@ const styles = StyleSheet.create({
   item: {
     width: "100%",
     height: 74,
+    backgroundColor: "#fff",
     borderColor: "#D3D3D3",
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -73,8 +140,19 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
   },
   textContainer: {
+    position: "absolute",
     width: "56%",
-    left: "200%",
+    right: 12,
+    padding: 12,
+    paddingBottom: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  textBottomContainer: {
+    position: "absolute",
+    width: "77%",
+    right: 12,
+    bottom: 12,
     padding: 12,
     paddingBottom: 0,
     flexDirection: "row",
