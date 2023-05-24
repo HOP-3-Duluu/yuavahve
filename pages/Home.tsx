@@ -7,19 +7,10 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import {
-  GestureHandlerRootView,
-  Swipeable,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SearchIcon from "../assets/Search";
 import FilterIcon from "../assets/Filter";
 import ItemComponent from "../components/itemComponent";
-
-const LeftActions = () => {
-  return (
-    <View style={{ width: 1, height: "100%", backgroundColor: "#000" }}></View>
-  );
-};
 
 const HomeScreen = () => {
   return (
@@ -35,15 +26,13 @@ const HomeScreen = () => {
               <FilterIcon />
             </View>
           </View>
-          <Swipeable
-            renderLeftActions={LeftActions}
-            friction={2}
-            leftThreshold={10}
-          >
-            <View style={{ width: "100%" }}>
-              <ItemComponent />
-            </View>
-          </Swipeable>
+          <ItemComponent />
+          <ItemComponent />
+          <ItemComponent />
+          <ItemComponent />
+          <ItemComponent />
+          <ItemComponent />
+          <ItemComponent />
         </ScrollView>
       </SafeAreaView>
     </GestureHandlerRootView>
