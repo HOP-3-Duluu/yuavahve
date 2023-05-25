@@ -1,4 +1,12 @@
-import { SafeAreaView, ScrollView, Image, Text, View, StyleSheet, Pressable } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import CopyIcon from "../assets/CopyIcon";
 import EditIcon from "../assets/EditIcon";
 import { Dimensions } from "react-native";
@@ -39,17 +47,23 @@ export const Settings = () => {
           />
           <View style={styles.codeCont}>
             <Text style={styles.codeTitle}>Код:</Text>
-            <Text numberOfLines={1} style={styles.familyId}>{shortenString}</Text>
-            <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
+
+            <Text numberOfLines={1} style={styles.familyId}>
+              {shortenString}
+            </Text>
+
+            <Pressable
+              onPress={() => copyToClipboard()}
+              style={styles.copyIcon}
+            >
               {CopyIcon}
             </Pressable>
           </View>
+          <Pressable style={styles.familyDelete}>
+            <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
+          </Pressable>
+          <View style={{ height: 200 }}></View>
         </View>
-
-        <Pressable style={styles.familyDelete}>
-          <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
-        </Pressable>
-        <View style={{height: 200}}></View>
       </ScrollView>
     </SafeAreaView>
   );
