@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, TextInput } from "react-native";
+=======
+import React from "react";
+import { SafeAreaView, StyleSheet, Text, View, TextInput } from "react-native";
+import { GestureHandlerRootView, FlatList } from "react-native-gesture-handler";
+import { SwipeListView } from "react-native-swipe-list-view";
+>>>>>>> 2726db2 (hariad hiiyoo)
 import SearchIcon from "../assets/Search";
 import FilterIcon from "../assets/Filter";
 import SwipeListItems from "../components/SwipeListItem";
@@ -66,6 +73,24 @@ const data = [
     isBought: false,
   },
 ];
+
+const renderHiddenItem = (data, rowMap) => (
+  <View style={styles.rowBack}>
+      <Text>Left</Text>
+      {/* <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnLeft]}
+          onPress={() => closeRow(rowMap, data.item.key)}
+      >
+          <Text style={styles.backTextWhite}>Close</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnRight]}
+          onPress={() => deleteRow(rowMap, data.item.key)}
+      >
+          <Text style={styles.backTextWhite}>Delete</Text>
+      </TouchableOpacity> */}
+  </View>
+);
 
 const HomeScreen = () => {
   const [filteredDataSource, setFilteredDataSource] = useState(data);

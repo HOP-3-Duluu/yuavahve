@@ -79,6 +79,26 @@ export const Settings = () => {
           </Pressable>
           <View style={{ height: 200 }}></View>
         </View>
+
+        <View style={styles.container}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
+            }}
+          />
+          <View style={styles.codeCont}>
+            <Text style={styles.codeTitle}>Код:</Text>
+            <Text numberOfLines={1} style={styles.familyId}>{shortenString}</Text>
+            <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
+              {CopyIcon}
+            </Pressable>
+          </View>
+        </View>
+
+        <Pressable style={styles.familyDelete}>
+          <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
