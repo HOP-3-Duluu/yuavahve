@@ -14,7 +14,6 @@ import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
 import HomeScreen from "./pages/Home";
 import Settings from "./pages/Settings";
-import HomeScreen from "./pages/Home";
 
 const Stack = createNativeStackNavigator();
 
