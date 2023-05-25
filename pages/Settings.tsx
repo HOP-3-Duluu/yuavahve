@@ -1,4 +1,4 @@
-import { Image, Text, View, StyleSheet, Pressable } from "react-native";
+import { SafeAreaView, ScrollView, Image, Text, View, StyleSheet, Pressable } from "react-native";
 import CopyIcon from "../assets/CopyIcon";
 import EditIcon from "../assets/EditIcon";
 import { Dimensions } from "react-native";
@@ -17,13 +17,14 @@ export const Settings = () => {
   };
 
   return (
-    <View style={styles.body}>
-      <View style={styles.familyNameCont}>
-        <View style={styles.familyName}>
-          <Text style={styles.familyNameText}>Тэрний гэр бүл</Text>
-          <Pressable style={styles.editIcon}>{EditIcon}</Pressable>
+    <SafeAreaView style={styles.body}>
+      <ScrollView>
+        <View style={styles.familyNameCont}>
+          <View style={styles.familyName}>
+            <Text style={styles.familyNameText}>Тэрний гэр бүл</Text>
+            <Pressable style={styles.editIcon}>{EditIcon}</Pressable>
+          </View>
         </View>
-      </View>
 
       <View style={styles.instructionCont}>
         <Text style={styles.instruction}>Гэр бүлийн гишүүн нэмэх</Text>
@@ -45,12 +46,28 @@ export const Settings = () => {
             {CopyIcon}
           </Pressable>
         </View>
-      </View>
 
-      <Pressable style={styles.familyDelete}>
-        <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
-      </Pressable>
-    </View>
+        <View style={styles.container}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
+            }}
+          />
+          <View style={styles.codeCont}>
+            <Text style={styles.codeTitle}>Код:</Text>
+            <Text numberOfLines={1} style={styles.familyId}>{shortenString}</Text>
+            <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
+              {CopyIcon}
+            </Pressable>
+          </View>
+        </View>
+
+        <Pressable style={styles.familyDelete}>
+          <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
+        </Pressable>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

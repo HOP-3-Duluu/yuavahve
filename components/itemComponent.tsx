@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Swipeable } from "react-native-gesture-handler";
+import { Swipeable, PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -8,6 +8,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import TrashIcon from "../assets/Trash";
+import moment from "moment";
 
 const data = [
   {
@@ -40,10 +41,12 @@ const ItemComponent = ({
   name,
   amount,
   isBought,
+  createdAt,
 }: {
   name: string;
   amount: number;
   isBought: boolean;
+  createdAt: any;
 }) => {
   const [activateDelete, setActivateDelete] = useState(false);
   const itemColor = useSharedValue("#fff");
@@ -79,8 +82,8 @@ const ItemComponent = ({
 
   return (
     <View style={{ left: "-20%", width: "100%" }}>
-      <Swipeable
-        renderLeftActions={LeftActions}
+      {/* <Swipeable
+        // renderLeftActions={LeftActions}
         renderRightActions={RightActions}
         friction={5}
         onSwipeableOpen={(event) => {
@@ -93,23 +96,25 @@ const ItemComponent = ({
         onSwipeableClose={(event) => {
           setActivateDelete(false);
         }}
-      >
-        <View style={styles.itemContainer}>
-          <Animated.View
-            style={[styles.iconContainer, animationStyle]}
-          ></Animated.View>
-          <Animated.View style={[styles.item, animationStyle]}>
-            <View style={styles.textContainer}>
-              <Text style={styles.itemName}>{name}</Text>
-              <Text style={styles.itemAmount}>{amount}ш</Text>
-            </View>
-            <View style={styles.textBottomContainer}>
-              <Text style={styles.itemCreator}>Ээжийн хүү</Text>
-              <Text style={styles.itemDate}>16:42:20</Text>
-            </View>
-          </Animated.View>
-        </View>
-      </Swipeable>
+      > */}
+      <View style={styles.itemContainer}>
+        <Animated.View
+          style={[styles.iconContainer, animationStyle]}
+        ></Animated.View>
+        <Animated.View style={[styles.item, animationStyle]}>
+          <View style={styles.textContainer}>
+            <Text style={styles.itemName}>{name}</Text>
+            <Text style={styles.itemAmount}>{amount}ш</Text>
+          </View>
+          <View style={styles.textBottomContainer}>
+            <Text style={styles.itemCreator}>Ээжийн хүү</Text>
+            <Text style={styles.itemDate}>
+              {moment(createdAt).format("LTS")}
+            </Text>
+          </View>
+        </Animated.View>
+      </View>
+      {/* </Swipeable> */}
     </View>
   );
 };

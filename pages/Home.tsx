@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View, TextInput } from "react-native";
 import { GestureHandlerRootView, FlatList } from "react-native-gesture-handler";
+import { SwipeListView } from "react-native-swipe-list-view";
 import SearchIcon from "../assets/Search";
 import FilterIcon from "../assets/Filter";
 import ItemComponent from "../components/itemComponent";
@@ -10,7 +11,7 @@ const data = [
     id: "6e7b5e65-375d-45dd-afe9-c497ae85eb25",
     productName: "Монгол сүү",
     category: "dairyProducts",
-    createdAt: 1683716265607,
+    createdAt: 1683716265200,
     price: 3000,
     amount: 1,
     creatorId: "d3453ea9-99e5-4fd6-ae86-c464df5c9071",
@@ -22,7 +23,7 @@ const data = [
     id: "6519de7c-01e8-4a2d-8488-77a061b181dc",
     productName: "Талх",
     category: "bakeryProducts",
-    createdAt: 1683716265608,
+    createdAt: 1683716265300,
     price: 5000,
     amount: 2,
     creatorId: "d3453ea9-99e5-4fd6-ae86-c464df5c9071",
@@ -34,7 +35,7 @@ const data = [
     id: "7519de7c-01e8-4a2d-8488-77a061b181dc",
     productName: "Мах",
     category: "meatProducts",
-    createdAt: 1683716265610,
+    createdAt: 1683716265400,
     price: 12000,
     amount: 3,
     creatorId: "d3453ea9-99e5-4fd6-ae86-c464df5c9071",
@@ -46,7 +47,7 @@ const data = [
     id: "8519de7c-01e8-4a2d-8488-77a061b181dc",
     productName: "Жимс",
     category: "fruitsVegetables",
-    createdAt: 1683716265609,
+    createdAt: 1683716265500,
     price: 3000,
     amount: 1,
     creatorId: "d3453ea9-99e5-4fd6-ae86-c464df5c9071",
@@ -58,7 +59,7 @@ const data = [
     id: "9519de7c-01e8-4a2d-8488-77a061b181dc",
     productName: "Төмс",
     category: "fruitsVegetables",
-    createdAt: 1683716265611,
+    createdAt: 1683716265600,
     price: 5000,
     amount: 1,
     creatorId: "d3453ea9-99e5-4fd6-ae86-c464df5c9071",
@@ -68,11 +69,29 @@ const data = [
   },
 ];
 
+const renderHiddenItem = (data, rowMap) => (
+  <View style={styles.rowBack}>
+      <Text>Left</Text>
+      {/* <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnLeft]}
+          onPress={() => closeRow(rowMap, data.item.key)}
+      >
+          <Text style={styles.backTextWhite}>Close</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnRight]}
+          onPress={() => deleteRow(rowMap, data.item.key)}
+      >
+          <Text style={styles.backTextWhite}>Delete</Text>
+      </TouchableOpacity> */}
+  </View>
+);
+
 const HomeScreen = () => {
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={styles.container}>
-        <FlatList
+        {/* <FlatList
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={data}
@@ -93,6 +112,7 @@ const HomeScreen = () => {
               name={item.productName}
               amount={item.amount}
               isBought={item.isBought}
+              createdAt={item.createdAt}
             />
           )}
           ListFooterComponent={() => <View style={{ height: 120 }}></View>}
@@ -101,6 +121,25 @@ const HomeScreen = () => {
               <Text>LIST IS EMPTY</Text>
             </View>
           )}
+        /> */}
+        <SwipeListView
+          data={data}
+          renderItem={({ item }) => (
+            <ItemComponent
+              name={item.productName}
+              amount={item.amount}
+              isBought={item.isBought}
+              createdAt={item.createdAt}
+            />
+          )}
+          renderHiddenItem={renderHiddenItem}
+          leftOpenValue={0}
+          tension={0}
+          rightOpenValue={-56}
+          previewRowKey={"0"}
+          previewOpenValue={-40}
+          previewOpenDelay={3000}
+          // onRowDidOpen={onRowDidOpen}
         />
       </SafeAreaView>
     </GestureHandlerRootView>
