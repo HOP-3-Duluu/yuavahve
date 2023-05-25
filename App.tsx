@@ -13,11 +13,7 @@ import Bottombar from "./components/Footer";
 import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
 import Settings from "./pages/Settings";
-<<<<<<< HEAD
 import HomeScreen from "./pages/Home";
-=======
-import BackArrow from "./assets/BackArrow";
->>>>>>> 05f0d15 (Front End finished)
 
 const Stack = createNativeStackNavigator();
 
