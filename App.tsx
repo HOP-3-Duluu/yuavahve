@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -12,7 +12,10 @@ import Setting from "./assets/Setting";
 import Bottombar from "./components/Footer";
 import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
+<<<<<<< HEAD
 import HomeScreen from "./pages/Home";
+=======
+>>>>>>> c06f599 (settings done)
 import Settings from "./pages/Settings";
 
 const Stack = createNativeStackNavigator();
