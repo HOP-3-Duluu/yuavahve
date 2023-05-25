@@ -13,7 +13,6 @@ import Bottombar from "./components/Footer";
 import ExpensePage from "./pages/Expense";
 import ExpenseMonthPage from "./pages/ExpenseMonth";
 import Settings from "./pages/Settings";
-import BackArrow from "./assets/BackArrow";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,11 +23,6 @@ const SettingsHeader = () => {
       {Setting}
     </Pressable>
   );
-};
-
-const BackHeader = () => {
-  const navigation = useNavigation();
-  return <Pressable onPress={() => navigation.goBack()}>{BackArrow}</Pressable>;
 };
 
 const App = () => {
@@ -60,15 +54,12 @@ const App = () => {
             fontSize: 24,
           },
           headerShadowVisible: false,
-          headerRight: () => (
-            <Pressable onPress={() => alert("Setting ruu orson")}>
-              {Setting}
-            </Pressable>
-          ),
+          headerRight: () => <SettingsHeader />
         })}
       >
         <Stack.Screen name="Expense" component={ExpensePage} />
         <Stack.Screen name="ExpenseMonth" component={ExpenseMonthPage} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
       <Bottombar />
     </NavigationContainer>
