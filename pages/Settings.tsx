@@ -38,13 +38,9 @@ export const Settings = () => {
         />
         <View style={styles.codeCont}>
           <Text style={styles.codeTitle}>Код:</Text>
-
-<<<<<<< HEAD
-          <Text numberOfLines={1} style={styles.familyId}>{shortenString}</Text>
-=======
-          <Text style={styles.familyId}>{shortenString}</Text>
->>>>>>> a4a0d2d (Front End finished)
-
+          <Text numberOfLines={1} style={styles.familyId}>
+            {shortenString}
+          </Text>
           <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
             {CopyIcon}
           </Pressable>
