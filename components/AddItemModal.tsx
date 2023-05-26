@@ -1,17 +1,12 @@
 import { Text, View, StyleSheet, Pressable, Modal, TextInput } from "react-native";
-import { Dimensions } from "react-native";
 import { useState } from "react";
-
-var width = Dimensions.get("window").width; //full width
-var height = Dimensions.get("window").height; //full height
-
 export const AddItemModal = () => {
 
     const [showModal, setShowModal] = useState(false)
     const [amount, onChangeAmount] = useState(1)
 
     return (
-        <View style={styles.body}>
+        <View>
 
             <Modal
                 animationType={'fade'}
@@ -85,13 +80,6 @@ export const AddItemModal = () => {
 
 
 const styles = StyleSheet.create({
-    body: {
-        width: width,
-        height: height,
-        flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "#ffffff",
-    },
     modalCont: {
         flex: 1,
         alignItems: 'center',
