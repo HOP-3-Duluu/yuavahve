@@ -31,6 +31,7 @@ export const Settings = () => {
           </View>
         </View>
 
+<<<<<<< HEAD
       <View style={styles.instructionCont}>
         <Text style={styles.instruction}>Гэр бүлийн гишүүн нэмэх</Text>
       </View>
@@ -50,6 +51,10 @@ export const Settings = () => {
           <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
             {CopyIcon}
           </Pressable>
+=======
+        <View style={styles.instructionCont}>
+          <Text style={styles.instruction}>Гэр бүлийн гишүүн нэмэх</Text>
+>>>>>>> 60ee6a25783c4e19caf4efcf1d09daa7f3112995
         </View>
 
         <View style={styles.container}>
