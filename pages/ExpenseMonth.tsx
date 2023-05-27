@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, Dimensions, ScrollView } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { ItemExpenseComponent } from "../components/ItemExpense";
 import ArrowRight from "../assets/ArrowRight";
+import Bottombar from "../components/Footer";
 
 const data = [
   {
@@ -308,6 +309,7 @@ const ExpenseMonthPage = ({ route }) => {
         ))}
         <View style={{ height: 120 }}></View>
       </ScrollView>
+      <Bottombar />
     </SafeAreaView>
   );
 };
