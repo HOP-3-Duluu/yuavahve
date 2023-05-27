@@ -1,54 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Swipeable, PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
   Easing,
 } from "react-native-reanimated";
-import TrashIcon from "../assets/Trash";
 import moment from "moment";
-
-const data = [
-  {
-    productName: "Монгол сүү",
-  },
-];
-
-const LeftActions = () => {
-  return (
-    <View style={{ width: 1, height: "100%", backgroundColor: "#000" }}></View>
-  );
-};
-
-const RightActions = () => {
-  return (
-    <View
-      style={{
-        width: 56,
-        height: "100%",
-        paddingTop: 80,
-        paddingHorizontal: 12,
-      }}
-    >
-      <TrashIcon />
-    </View>
-  );
-};
 
 const ItemComponent = ({
   name,
   amount,
   isBought,
   createdAt,
+  activateDelete = false,
 }: {
   name: string;
   amount: number;
   isBought: boolean;
   createdAt: any;
+  activateDelete: boolean;
 }) => {
-  const [activateDelete, setActivateDelete] = useState(false);
   const itemColor = useSharedValue("#fff");
   const itemBorderColor = useSharedValue("#D3D3D3");
 
@@ -82,21 +54,6 @@ const ItemComponent = ({
 
   return (
     <View style={{ left: "-20%", width: "100%" }}>
-      {/* <Swipeable
-        // renderLeftActions={LeftActions}
-        renderRightActions={RightActions}
-        friction={5}
-        onSwipeableOpen={(event) => {
-          if (event === "right") {
-            setActivateDelete(true);
-          } else {
-            setActivateDelete(false);
-          }
-        }}
-        onSwipeableClose={(event) => {
-          setActivateDelete(false);
-        }}
-      > */}
       <View style={styles.itemContainer}>
         <Animated.View
           style={[styles.iconContainer, animationStyle]}
@@ -114,7 +71,6 @@ const ItemComponent = ({
           </View>
         </Animated.View>
       </View>
-      {/* </Swipeable> */}
     </View>
   );
 };

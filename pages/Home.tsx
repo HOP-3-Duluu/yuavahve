@@ -1,10 +1,8 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, View, TextInput } from "react-native";
-import { GestureHandlerRootView, FlatList } from "react-native-gesture-handler";
-import { SwipeListView } from "react-native-swipe-list-view";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, View, TextInput } from "react-native";
 import SearchIcon from "../assets/Search";
 import FilterIcon from "../assets/Filter";
-import ItemComponent from "../components/itemComponent";
+import SwipeListItems from "../components/SwipeListItem";
 
 const data = [
   {
@@ -69,80 +67,45 @@ const data = [
   },
 ];
 
-const renderHiddenItem = (data, rowMap) => (
-  <View style={styles.rowBack}>
-      <Text>Left</Text>
-      {/* <TouchableOpacity
-          style={[styles.backRightBtn, styles.backRightBtnLeft]}
-          onPress={() => closeRow(rowMap, data.item.key)}
-      >
-          <Text style={styles.backTextWhite}>Close</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-          style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => deleteRow(rowMap, data.item.key)}
-      >
-          <Text style={styles.backTextWhite}>Delete</Text>
-      </TouchableOpacity> */}
-  </View>
-);
-
 const HomeScreen = () => {
+  const [filteredDataSource, setFilteredDataSource] = useState(data);
+  const [search, setSearch] = useState("");
+
+  const searchFilterFunction = (text: string) => {
+    if (text) {
+      const newData = data.filter((item) => {
+        const itemData = item.productName
+          ? item.productName.toUpperCase()
+          : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      setFilteredDataSource(data);
+      setSearch(text);
+    }
+  };
+
   return (
-    <GestureHandlerRootView>
-      <SafeAreaView style={styles.container}>
-        {/* <FlatList
-          style={{ width: "100%" }}
-          showsVerticalScrollIndicator={false}
-          data={data}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={() => (
-            <View style={styles.searchContainer}>
-              <View style={styles.search}>
-                <TextInput style={styles.input} />
-                <SearchIcon />
-              </View>
-              <View style={{ marginLeft: 24 }}>
-                <FilterIcon />
-              </View>
-            </View>
-          )}
-          renderItem={({ item }) => (
-            <ItemComponent
-              name={item.productName}
-              amount={item.amount}
-              isBought={item.isBought}
-              createdAt={item.createdAt}
-            />
-          )}
-          ListFooterComponent={() => <View style={{ height: 120 }}></View>}
-          ListEmptyComponent={() => (
-            <View>
-              <Text>LIST IS EMPTY</Text>
-            </View>
-          )}
-        /> */}
-        <SwipeListView
-          data={data}
-          renderItem={({ item }) => (
-            <ItemComponent
-              name={item.productName}
-              amount={item.amount}
-              isBought={item.isBought}
-              createdAt={item.createdAt}
-            />
-          )}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={0}
-          tension={0}
-          rightOpenValue={-56}
-          previewRowKey={"0"}
-          previewOpenValue={-40}
-          previewOpenDelay={3000}
-          // onRowDidOpen={onRowDidOpen}
-        />
-      </SafeAreaView>
-    </GestureHandlerRootView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.searchContainer}>
+        <View style={styles.search}>
+          <TextInput
+            style={styles.input}
+            placeholder="Хайх"
+            onChangeText={(text) => searchFilterFunction(text)}
+            value={search}
+          />
+          <SearchIcon />
+        </View>
+        <View style={{ marginLeft: 24 }}>
+          <FilterIcon />
+        </View>
+      </View>
+      <SwipeListItems filteredDataSource={filteredDataSource} />
+    </SafeAreaView>
   );
 };
 
@@ -172,6 +135,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "85%",
+    fontFamily: "Montserrat_500Medium",
   },
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -55,7 +55,7 @@ const App = () => {
             fontSize: 24,
           },
           headerShadowVisible: false,
-          headerRight: () => <SettingsHeader />
+          headerRight: () => <SettingsHeader />,
         })}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
