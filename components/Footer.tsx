@@ -1,15 +1,11 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, View, useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Curve from "../assets/Curve";
 import Tugrik from "../assets/Tugrik";
 import Group from "../assets/Group";
 import Plus from "../assets/Plus";
+import AddItemModal from "./AddItemModal";
 
 const BarButton = ({
   w,
@@ -58,15 +54,17 @@ const PlusMid = ({
   h,
   b,
   l,
+  setAddItemModalToggle,
 }: {
   w: number;
   h: number;
   b: number;
   l: number;
+  setAddItemModalToggle: any;
 }) => {
   return (
     <Pressable
-      onPress={() => alert("Add item")}
+      onPress={() => setAddItemModalToggle(true)}
       style={{
         position: "absolute",
         bottom: b,
@@ -86,6 +84,7 @@ const PlusMid = ({
 
 const Bottombar = () => {
   const { width, height } = useWindowDimensions();
+  const [addItemModalToggle, setAddItemModalToggle] = useState(false);
   return (
     <View
       style={{
@@ -101,6 +100,7 @@ const Bottombar = () => {
         w={width / 6.15}
         b={height / 19}
         l={width / 2 - width / 11.6}
+        setAddItemModalToggle={setAddItemModalToggle}
       />
       <BarButton
         w={width / 2.96}
@@ -123,6 +123,12 @@ const Bottombar = () => {
         l={(width / 3.02) * 2}
         type={"group"}
       ></BarButton>
+      {addItemModalToggle && (
+        <AddItemModal
+          addItemModalToggle={addItemModalToggle}
+          setAddItemModalToggle={setAddItemModalToggle}
+        />
+      )}
     </View>
   );
 };

@@ -3,6 +3,8 @@ import { SafeAreaView, StyleSheet, View, TextInput } from "react-native";
 import SearchIcon from "../assets/Search";
 import FilterIcon from "../assets/Filter";
 import SwipeListItems from "../components/SwipeListItem";
+import Loading from "../components/Loading";
+import Bottombar from "../components/Footer";
 
 const data = [
   {
@@ -69,6 +71,7 @@ const data = [
 
 const HomeScreen = () => {
   const [filteredDataSource, setFilteredDataSource] = useState(data);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
   const searchFilterFunction = (text: string) => {
@@ -105,6 +108,8 @@ const HomeScreen = () => {
         </View>
       </View>
       <SwipeListItems filteredDataSource={filteredDataSource} />
+      <Bottombar />
+      {loading && <Loading />}
     </SafeAreaView>
   );
 };

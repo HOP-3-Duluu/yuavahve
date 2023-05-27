@@ -9,11 +9,8 @@ import {
 } from "react-native";
 import CopyIcon from "../assets/CopyIcon";
 import EditIcon from "../assets/EditIcon";
-import { Dimensions } from "react-native";
 import * as Clipboard from "expo-clipboard";
-
-var width = Dimensions.get("window").width;
-var height = Dimensions.get("window").height;
+import Bottombar from "../components/Footer";
 
 export const Settings = () => {
   let stringVal = "7396dc35-52fa-44d0-8c22-1327dcd76b56";
@@ -26,7 +23,7 @@ export const Settings = () => {
 
   return (
     <SafeAreaView style={styles.body}>
-      <ScrollView>
+      <ScrollView style={{ width: "100%" }}>
         <View style={styles.familyNameCont}>
           <View style={styles.familyName}>
             <Text style={styles.familyNameText}>Тэрний гэр бүл</Text>
@@ -39,55 +36,11 @@ export const Settings = () => {
         </View>
 
         <View style={styles.container}>
-          <Image
-            style={styles.img}
-            source={{
-              uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
-            }}
-          />
-          <View style={styles.codeCont}>
-            <Text style={styles.codeTitle}>Код:</Text>
-            <Text numberOfLines={1} style={styles.familyId}>
-              {shortenString}
-            </Text>
-            <Pressable
-              onPress={() => copyToClipboard()}
-              style={styles.copyIcon}
-            >
-              {CopyIcon}
-            </Pressable>
-          </View>
-          <Pressable style={styles.familyDelete}>
-            <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
-          </Pressable>
-          <View style={{ height: 200 }}></View>
-        </View>
-
-        <View style={styles.container}>
-          <Image
-            style={styles.img}
-            source={{
-              uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
-            }}
-          />
-          <View style={styles.codeCont}>
-            <Text style={styles.codeTitle}>Код:</Text>
-            <Text numberOfLines={1} style={styles.familyId}>
-              {shortenString}
-            </Text>
-            <Pressable
-              onPress={() => copyToClipboard()}
-              style={styles.copyIcon}
-            >
-              {CopyIcon}
-            </Pressable>
-          </View>
-
-          <View style={styles.container}>
+          <View style={styles.borderedContainer}>
             <Image
               style={styles.img}
               source={{
-                uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
+                uri: `http://api.qrserver.com/v1/create-qr-code/?data=${stringVal}!&size=300x300`,
               }}
             />
             <View style={styles.codeCont}>
@@ -107,24 +60,27 @@ export const Settings = () => {
           <Pressable style={styles.familyDelete}>
             <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
           </Pressable>
-          <View style={{ height: 200 }}></View>
         </View>
+        <View style={{ height: 200 }}></View>
       </ScrollView>
+      <Bottombar />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    width: width,
-    height: height,
+    width: "100%",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#ffffff",
   },
   container: {
-    width: 350,
-    height: 350,
+    width: "100%",
+    alignItems: "center",
+  },
+  borderedContainer: {
+    width: "90%",
     borderColor: "#D9D9D9",
     borderWidth: 1,
     borderRadius: 30,
@@ -166,6 +122,7 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   img: {
+    margin: 24,
     width: 300,
     height: 300,
   },
@@ -176,18 +133,20 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   codeCont: {
-    width: 248,
+    width: "80%",
     height: 24,
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 24,
   },
   familyId: {
-    width: "70%",
+    width: "65%",
     fontSize: 12,
     lineHeight: 15,
     color: "#5CB881",
     fontFamily: "Montserrat_500Medium",
+    marginLeft: 5,
   },
   copyIcon: {
     width: 24,
@@ -196,7 +155,7 @@ const styles = StyleSheet.create({
   familyDelete: {
     width: 350,
     height: 40,
-    marginTop: 28,
+    marginTop: 24,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#EE6969",
