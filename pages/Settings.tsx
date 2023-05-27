@@ -99,6 +99,7 @@ export const Settings = () => {
         <Pressable style={styles.familyDelete}>
           <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
         </Pressable>
+        <View style={{height: 200}}></View>
       </ScrollView>
     </SafeAreaView>
   );
