@@ -7,18 +7,21 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import moment from "moment";
+import IconCategory from "./IconCategory";
 
 const ItemComponent = ({
   name,
   amount,
   isBought,
   createdAt,
+  category,
   activateDelete = false,
 }: {
   name: string;
   amount: number;
   isBought: boolean;
   createdAt: any;
+  category: string;
   activateDelete: boolean;
 }) => {
   const itemColor = useSharedValue("#fff");
@@ -55,9 +58,11 @@ const ItemComponent = ({
   return (
     <View style={{ left: "-20%", width: "100%" }}>
       <View style={styles.itemContainer}>
-        <Animated.View
-          style={[styles.iconContainer, animationStyle]}
-        ></Animated.View>
+        <Animated.View style={[styles.iconContainer, animationStyle]}>
+          <View style={{ width: 48, height: 48 }}>
+            <IconCategory category={category} />
+          </View>
+        </Animated.View>
         <Animated.View style={[styles.item, animationStyle]}>
           <View style={styles.textContainer}>
             <Text style={styles.itemName}>{name}</Text>
@@ -89,6 +94,9 @@ const styles = StyleSheet.create({
     left: "25%",
     bottom: -32,
     zIndex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
   item: {
     width: "100%",
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: "absolute",
-    width: "56%",
+    width: "57%",
     right: 12,
     padding: 12,
     paddingBottom: 0,
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   },
   textBottomContainer: {
     position: "absolute",
-    width: "77%",
+    width: "74%",
     right: 12,
     bottom: 12,
     padding: 12,

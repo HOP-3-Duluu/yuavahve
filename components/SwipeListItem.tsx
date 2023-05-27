@@ -14,6 +14,7 @@ const SwipeListItems = ({
   const [activatedRows, setActivatedRows] = useState<Record<string, boolean>>(
     {}
   );
+  const [newDataArray, setNewDataArray] = useState(filteredDataSource);
 
   const debouncedUpdateActivatedDelete = debounce(
     (rowKey: string, isOpen: boolean) => {
@@ -32,7 +33,8 @@ const SwipeListItems = ({
         amount={item.amount}
         isBought={item.isBought}
         createdAt={item.createdAt}
-        activateDelete={activatedRows[item.id] || false}
+        category={item.category}
+        activateDelete={activatedRows[item.productId] || false}
       />
     ),
     [activatedRows]
@@ -92,22 +94,45 @@ const SwipeListItems = ({
     []
   );
 
+  const onSwipeValueChange = useCallback(
+    (swipeData: any) => {
+      const { key, value, direction } = swipeData;
+      if (value === 48) {
+        const updatedItem = filteredDataSource.find(
+          (item: any) => item.productId === key
+        );
+        if (updatedItem && !updatedItem.isBought) {
+          updatedItem.isBought = !updatedItem.isBought;
+          debouncedUpdateItemInDatabase(updatedItem);
+          setNewDataArray([...filteredDataSource]);
+        }
+      }
+    },
+    [filteredDataSource, debouncedUpdateItemInDatabase]
+  );
+
+  const updateItemInDatabase = (updatedItem: any) => {
+    console.log(updatedItem);
+  };
+
+  const debouncedUpdateItemInDatabase = debounce(updateItemInDatabase, 100);
+
   return (
     <SwipeListView
       style={{ height: "100%" }}
-      data={filteredDataSource}
+      data={newDataArray}
       renderItem={renderItem}
       renderHiddenItem={renderHiddenItem}
       leftOpenValue={0}
       rightOpenValue={-60}
       stopLeftSwipe={48}
       friction={6}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.productId}
       onRowOpen={onRowOpen}
       onRowClose={onRowClose}
       disableVirtualization={false}
-      swipeToUpdate={true}
-      ListFooterComponent={() => <View style={{ height: 120 }} />}
+      onSwipeValueChange={onSwipeValueChange}
+      ListFooterComponent={() => <View style={{ height: 160 }} />}
     />
   );
 };
