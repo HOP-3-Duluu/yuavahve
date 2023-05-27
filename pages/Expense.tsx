@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { ItemExpenseComponent } from "../components/ItemExpense";
+import Bottombar from "../components/Footer";
 
 const data = [
   {
@@ -145,6 +146,7 @@ const ExpensePage = () => {
             })}
         </View>
       </ScrollView>
+      <Bottombar />
     </SafeAreaView>
   );
 };
