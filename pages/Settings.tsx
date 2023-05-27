@@ -12,8 +12,8 @@ import EditIcon from "../assets/EditIcon";
 import { Dimensions } from "react-native";
 import * as Clipboard from "expo-clipboard";
 
-var width = Dimensions.get("window").width; //full width
-var height = Dimensions.get("window").height; //full height
+var width = Dimensions.get("window").width;
+var height = Dimensions.get("window").height;
 
 export const Settings = () => {
   let stringVal = "7396dc35-52fa-44d0-8c22-1327dcd76b56";
@@ -89,17 +89,43 @@ export const Settings = () => {
           />
           <View style={styles.codeCont}>
             <Text style={styles.codeTitle}>Код:</Text>
-            <Text numberOfLines={1} style={styles.familyId}>{shortenString}</Text>
-            <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
+            <Text numberOfLines={1} style={styles.familyId}>
+              {shortenString}
+            </Text>
+            <Pressable
+              onPress={() => copyToClipboard()}
+              style={styles.copyIcon}
+            >
               {CopyIcon}
             </Pressable>
           </View>
-        </View>
 
-        <Pressable style={styles.familyDelete}>
-          <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
-        </Pressable>
-        <View style={{height: 200}}></View>
+          <View style={styles.container}>
+            <Image
+              style={styles.img}
+              source={{
+                uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
+              }}
+            />
+            <View style={styles.codeCont}>
+              <Text style={styles.codeTitle}>Код:</Text>
+              <Text numberOfLines={1} style={styles.familyId}>
+                {shortenString}
+              </Text>
+              <Pressable
+                onPress={() => copyToClipboard()}
+                style={styles.copyIcon}
+              >
+                {CopyIcon}
+              </Pressable>
+            </View>
+          </View>
+
+          <Pressable style={styles.familyDelete}>
+            <Text style={styles.deleteText}>Бүлэглэлийг устгах</Text>
+          </Pressable>
+          <View style={{ height: 200 }}></View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
