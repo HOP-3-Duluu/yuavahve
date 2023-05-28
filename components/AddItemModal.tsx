@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
   nemeltInput: {
     width: "100%",
     height: 120,
-    textAlignVertical: "top",
     borderColor: "#D9D9D9",
     borderWidth: 1,
     borderRadius: 20,

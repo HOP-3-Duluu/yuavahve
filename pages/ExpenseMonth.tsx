@@ -117,8 +117,7 @@ const ExpenseMonthPage = ({ route }) => {
           </Text>
         </View>
         <View style={{ justifyContent: "center" }}>
-          {/* <ScrollView horizontal onScroll={handleScroll}> */}
-          <ScrollView horizontal>
+          <ScrollView horizontal onScroll={handleScroll}>
             <LineChart
               data={{
                 labels: daysOfMonth,

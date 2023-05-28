@@ -17,7 +17,7 @@ const data = [
     creatorName: "Tergel",
     familyId: "ff1709c1-5ce9-4402-a0d9-7fac0ef56c6d",
     message: "i want it",
-    isBought: true,
+    isBought: false,
   },
   {
     productId: "6519de7c-01e8-4a2d-8488-77a061b181dc",

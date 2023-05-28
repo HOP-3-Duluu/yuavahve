@@ -12,15 +12,18 @@ import Profile from "../assets/Profile";
 import MaskInput, { Masks } from "react-native-mask-input";
 import { ScrollView } from "react-native-gesture-handler";
 import { useAuthContext } from "../providers/authContext";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
   const { width, height } = useWindowDimensions();
+  const navigation = useNavigation();
   const { signUp } = useAuthContext();
   const [bday, setBday] = useState("");
   const [text, setText] = useState("");
   const Continue = async () => {
     if (text !== "" && bday !== "") {
-      signUp(text, bday);
+      await signUp(text, bday);
+      navigation.navigate("Home");
     }
   };
 

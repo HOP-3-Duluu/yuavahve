@@ -199,29 +199,51 @@ const SwipeListItems = ({
                 <Tugrik />
               </View>
             </View>
-            <Pressable
+            <View
               style={{
-                width: "100%",
-                height: 40,
-                backgroundColor: "#5CB881",
-                borderRadius: 20,
-                justifyContent: "center",
+                flexDirection: "row",
                 alignItems: "center",
+                justifyContent: "space-between",
                 marginTop: 24,
               }}
-              onPress={updateItemInDatabase}
             >
-              <Text
+              <Pressable
                 style={{
-                  fontFamily: "Montserrat_500Medium",
-                  fontSize: 16,
-                  lineHeight: 20,
-                  color: "#fff",
+                  width: "48%",
+                  height: 40,
+                  borderColor: "#EE6969",
+                  borderWidth: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 20,
                 }}
+                onPress={() => setPriceModal(false)}
               >
-                Нэмэх
-              </Text>
-            </Pressable>
+                <Text style={{ color: "#EE6969" }}>Цуцлах</Text>
+              </Pressable>
+              <Pressable
+                style={{
+                  width: "48%",
+                  height: 40,
+                  backgroundColor: "#5CB881",
+                  borderRadius: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={updateItemInDatabase}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_500Medium",
+                    fontSize: 16,
+                    lineHeight: 20,
+                    color: "#fff",
+                  }}
+                >
+                  Нэмэх
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
