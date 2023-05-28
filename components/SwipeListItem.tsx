@@ -139,7 +139,7 @@ const SwipeListItems = ({
         onRowClose={onRowClose}
         disableVirtualization={false}
         onSwipeValueChange={onSwipeValueChange}
-        ListFooterComponent={() => <View style={{ height: 160 }} />}
+        ListFooterComponent={() => <View style={{ height: 180 }} />}
         ListEmptyComponent={<EmptyList />}
       />
       <Modal animationType={"fade"} transparent={true} visible={priceModal}>

@@ -25,7 +25,7 @@ const BarButton = ({
       onPress={
         type === "zardal"
           ? () => navigation.navigate("Expense")
-          : () => alert("Group")
+          : () => navigation.navigate("Group")
       }
       style={{
         position: "absolute",
@@ -62,9 +62,13 @@ const PlusMid = ({
   l: number;
   setAddItemModalToggle: any;
 }) => {
+  const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => setAddItemModalToggle(true)}
+      onPress={() => {
+        setAddItemModalToggle(true);
+        navigation.navigate("Home");
+      }}
       style={{
         position: "absolute",
         bottom: b,
@@ -132,13 +136,5 @@ const Bottombar = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    backgroundColor: "#fff",
-    bottom: 0,
-  },
-});
 
 export default Bottombar;

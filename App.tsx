@@ -16,6 +16,7 @@ import HomeScreen from "./pages/Home";
 import Loading from "./components/Loading";
 import Login from "./pages/Login";
 import { Provider, useAuthContext } from "./providers/authContext";
+import GroupScreen from "./pages/GroupScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +48,6 @@ const App = () => {
     <Provider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={"Login"}
           screenOptions={({ route }) => ({
             title: "Юу авах вэ?",
             headerTitleAlign: "center",
@@ -69,11 +69,14 @@ const App = () => {
             },
           })}
         >
+          {user.userId !== undefined && (
+            <Stack.Screen name="Login" component={Login} />
+          )}
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Expense" component={ExpensePage} />
           <Stack.Screen name="ExpenseMonth" component={ExpenseMonthPage} />
           <Stack.Screen name="Settings" component={Settings} />
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Group" component={GroupScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

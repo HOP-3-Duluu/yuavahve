@@ -6,9 +6,11 @@ import {
   Pressable,
   Modal,
   TextInput,
+  Platform,
 } from "react-native";
 import IconCategory from "./IconCategory";
 import { Picker } from "@react-native-picker/picker";
+import UpDownArrow from "../assets/UpDownArrow";
 
 export const AddItemModal = ({
   addItemModalToggle,
@@ -90,6 +92,7 @@ export const AddItemModal = ({
                     <Picker.Item label="кг" value="кг" />
                     <Picker.Item label="л" value="л" />
                   </Picker>
+                  {Platform.OS === "ios" && <UpDownArrow />}
                 </View>
               </View>
             </View>
@@ -187,10 +190,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
+    flexDirection: "row",
+    gap: 8,
   },
   amountTypeInput: {
-    width: "100%",
-    height: "100%",
+    width: "60%",
   },
   shirheg: {
     fontFamily: "Montserrat_800ExtraBold",

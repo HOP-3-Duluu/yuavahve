@@ -12,12 +12,11 @@ import EditIcon from "../assets/EditIcon";
 import * as Clipboard from "expo-clipboard";
 import Bottombar from "../components/Footer";
 
-export const Settings = () => {
+const Settings = () => {
   let stringVal = "7396dc35-52fa-44d0-8c22-1327dcd76b56";
   let shortenString = stringVal.substring(0, 23).concat("...");
 
   const copyToClipboard = async () => {
-    console.log("done???");
     await Clipboard.setStringAsync(stringVal);
   };
 
@@ -31,30 +30,8 @@ export const Settings = () => {
           </View>
         </View>
 
-<<<<<<< HEAD
-      <View style={styles.instructionCont}>
-        <Text style={styles.instruction}>Гэр бүлийн гишүүн нэмэх</Text>
-      </View>
-
-      <View style={styles.container}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: "https://api.qr-code-generator.com/v1/create?access-token=9yrQ72A3bcHUz3EUdsi6RJswZyBxlc_LSYqNBPFGY2MQHOIJZv6yXOZOc1YqWdVR&qr_code_text=a&image_format=PNG",
-          }}
-        />
-        <View style={styles.codeCont}>
-          <Text style={styles.codeTitle}>Код:</Text>
-          <Text numberOfLines={1} style={styles.familyId}>
-            {shortenString}
-          </Text>
-          <Pressable onPress={() => copyToClipboard()} style={styles.copyIcon}>
-            {CopyIcon}
-          </Pressable>
-=======
         <View style={styles.instructionCont}>
           <Text style={styles.instruction}>Гэр бүлийн гишүүн нэмэх</Text>
->>>>>>> 60ee6a25783c4e19caf4efcf1d09daa7f3112995
         </View>
 
         <View style={styles.container}>
@@ -145,6 +122,7 @@ const styles = StyleSheet.create({
   },
   img: {
     margin: 24,
+    padding: 24,
     width: 300,
     height: 300,
   },
