@@ -17,6 +17,7 @@ import Loading from "./components/Loading";
 import Login from "./pages/Login";
 import { Provider, useAuthContext } from "./providers/authContext";
 import GroupScreen from "./pages/GroupScreen";
+import JoinFamily from "./pages/joinFamily";
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,7 @@ const App = () => {
           <Stack.Screen name="ExpenseMonth" component={ExpenseMonthPage} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Group" component={GroupScreen} />
+          <Stack.Screen name="JoinFamily" component={JoinFamily} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
